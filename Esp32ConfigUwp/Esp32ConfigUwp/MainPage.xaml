@@ -1,0 +1,63 @@
+﻿<Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Esp32ConfigUwp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Custom="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    x:Class="Esp32ConfigUwp.MainPage"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid RenderTransformOrigin="0.500,0.500">
+
+        <Custom:DataGrid x:Name="m_DataGrid_BleDevicePool"
+                         AutoGenerateColumns="False"
+                         HorizontalAlignment="Left"
+                         Margin="50,36,0,0"
+                         VerticalAlignment="Top"
+                         Height="350" Width="550" BorderThickness="1,1,1,1" FontFamily="Arial" FontSize="10" IsReadOnly="True"
+                         AlternatingRowBackground="LightGray" CanUserSortColumns="False" >
+            <Custom:DataGrid.Columns>
+                <Custom:DataGridTextColumn Header="Device Name" Width="200" Binding="{Binding DeviceName}"></Custom:DataGridTextColumn>
+                <Custom:DataGridTextColumn Header="Address" Width="350" Binding="{Binding DeviceAddress}"></Custom:DataGridTextColumn>
+            </Custom:DataGrid.Columns>
+        </Custom:DataGrid>
+
+        <TextBox x:Name="m_TxtBox_LogConsole" HorizontalAlignment="Left" Height="250" Margin="50,412,0,0" VerticalAlignment="Top" Width="550" TextWrapping="Wrap" AcceptsReturn="True" ScrollViewer.VerticalScrollBarVisibility="Auto" FontFamily="Courier New" FontSize="10" />
+        <Button x:Name="m_Btn_BleScanStart" Content="Start BLE Scan" Margin="120,684,0,0" VerticalAlignment="Top" Width="150" Click="OnClick_Btn_BleScanStart"/>
+        <Button x:Name="m_Btn_BleScanStop" Content="Stop BLE Scan" Margin="380,684,0,0" VerticalAlignment="Top" Width="150" Click="OnClick_Btn_BleScanStop"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="650,46,0,0" Text="Selected Device:" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="120" FontFamily="Arial" FontSize="12"/>
+        <TextBlock x:Name="m_TxtBlck_SelectedDevice" HorizontalAlignment="Left" Margin="770,46,0,0" Text="[m_TxtBlck_SelectedDevice]" TextWrapping="Wrap" VerticalAlignment="Top" Height="25" Width="200" FontFamily="Arial" FontSize="12"/>
+        <Button x:Name="m_Btn_ConnectDevice" Content="Connect Device" Margin="650,74,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.828,-0.201" Width="150" Click="OnClick_Btn_ConnectDevice"/>
+        <TextBlock HorizontalAlignment="Left" Margin="650,124,0,0" Text="Device Type:" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="120" FontFamily="Arial" FontSize="12"/>
+        <TextBlock x:Name="m_TxtBlck_DevType" HorizontalAlignment="Left" Margin="770,124,0,0" Text="[m_TxtBlck_DevType]" TextWrapping="Wrap" VerticalAlignment="Top" Height="25" Width="150" FontFamily="Arial" FontSize="12"/>
+        <TextBlock HorizontalAlignment="Left" Margin="650,166,0,0" Text="TickCount [sec]:" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="120" FontFamily="Arial" FontSize="12"/>
+        <TextBlock x:Name="m_TxtBlck_SysTickCnt" HorizontalAlignment="Left" Margin="770,166,0,0" Text="[m_TxtBlck_SysTickCnt]" TextWrapping="Wrap" VerticalAlignment="Top" Height="25" Width="150" FontFamily="Arial" FontSize="12"/>
+        <Button x:Name="m_Btn_RefreshSysTickCnt" Content="&#xE117;" Margin="886,159,0,0" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" RenderTransformOrigin="0.079,0.544" Click="OnClick_Btn_RefreshSysTickCnt"/>
+        <TextBlock HorizontalAlignment="Left" Margin="650,208,0,0" Text="Device Name:" TextWrapping="Wrap" VerticalAlignment="Top" Height="25" Width="100" FontFamily="Arial" FontSize="12"/>
+        <TextBox x:Name="m_TxtBox_DevName" HorizontalAlignment="Left" Margin="770,202,0,0" Text="[m_TxtBox_DevName]" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="-0.05,1.469" Width="150" FontFamily="Arial" FontSize="14" VerticalContentAlignment="Center" IsSpellCheckEnabled="False"/>
+        <TextBlock HorizontalAlignment="Left" Margin="650,250,0,0" Text="WIFI SSID:" TextWrapping="Wrap" VerticalAlignment="Top" Height="25" Width="100" FontFamily="Arial" FontSize="12"/>
+        <TextBox x:Name="m_TxtBox_SSID" HorizontalAlignment="Left" Margin="770,244,0,0" Text="[m_TxtBox_SSID]" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="-0.05,1.469" Width="150" FontFamily="Arial" FontSize="14" VerticalContentAlignment="Center" IsSpellCheckEnabled="False"/>
+        <TextBlock HorizontalAlignment="Left" Margin="650,292,0,0" Text="WIFI Password:" TextWrapping="Wrap" VerticalAlignment="Top" Height="25" Width="100" FontFamily="Arial" FontSize="12"/>
+        <TextBox x:Name="m_TxtBox_Passwd" HorizontalAlignment="Left" Margin="770,286,0,0" Text="[m_TxtBox_Passwd]" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="-0.05,1.469" Width="150" FontFamily="Arial" FontSize="14" VerticalContentAlignment="Center" IsSpellCheckEnabled="False"/>
+        <TextBlock HorizontalAlignment="Left" Margin="650,334,0,0" Text="Own Address:" TextWrapping="Wrap" VerticalAlignment="Top" Height="25" Width="100" FontFamily="Arial" FontSize="12"/>
+        <TextBox x:Name="m_TxtBox_OwnAddr" HorizontalAlignment="Left" Margin="770,328,0,0" Text="[m_TxtBox_OwnAddr]" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="-0.05,1.469" Width="150" FontFamily="Arial" FontSize="14" VerticalContentAlignment="Center" IsSpellCheckEnabled="False"/>
+        <TextBlock HorizontalAlignment="Left" Margin="650,376,0,0" Text="WIFI Mode:" TextWrapping="Wrap" VerticalAlignment="Top" Height="25" Width="100" FontFamily="Arial" FontSize="12"/>
+        <ComboBox x:Name="m_CmbBox_OwnMode" Margin="770,370,0,0" Width="150" FontFamily="Arial"/>
+        <CheckBox x:Name="m_ChckBox_AppRtCfgOpt1" Content="[Runtime Option #1]" Margin="650,412,0,0" VerticalAlignment="Top" FontSize="12"/>
+        <CheckBox x:Name="m_ChckBox_AppRtCfgOpt2" Content="[Runtime Option #2]" Margin="650,452,0,0" VerticalAlignment="Top" FontSize="12"/>
+        <CheckBox x:Name="m_ChckBox_AppRtCfgOpt3" Content="[Runtime Option #3]" Margin="650,492,0,0" VerticalAlignment="Top" FontSize="12"/>
+        <CheckBox x:Name="m_ChckBox_AppRtCfgOpt4" Content="[Runtime Option #4]" Margin="650,532,0,0" VerticalAlignment="Top" FontSize="12"/>
+        <CheckBox x:Name="m_ChckBox_AppRtCfgOpt5" Content="[Runtime Option #5]" Margin="830,412,0,0" VerticalAlignment="Top" FontSize="12"/>
+        <CheckBox x:Name="m_ChckBox_AppRtCfgOpt6" Content="[Runtime Option #6]" Margin="830,452,0,0" VerticalAlignment="Top" FontSize="12"/>
+        <CheckBox x:Name="m_ChckBox_AppRtCfgOpt7" Content="[Runtime Option #7]" Margin="830,492,0,0" VerticalAlignment="Top" FontSize="12"/>
+        <CheckBox x:Name="m_ChckBox_AppRtCfgOpt8" Content="[Runtime Option #8]" Margin="830,532,0,0" VerticalAlignment="Top" FontSize="12"/>
+        <TextBlock x:Name="m_TxtBlck_PeerAddress" HorizontalAlignment="Left" Margin="650,580,0,0" Text="[Peer Address:]" TextWrapping="Wrap" VerticalAlignment="Top" Height="25" Width="100" FontFamily="Arial" FontSize="12"/>
+        <TextBox x:Name="m_TxtBox_AppRtCfgPeerAddr" HorizontalAlignment="Left" Margin="770,574,0,0" Text="[m_TxtBox_PeerAddr" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="-0.05,1.469" Width="150" FontFamily="Arial" FontSize="14" VerticalContentAlignment="Center" IsSpellCheckEnabled="False"/>
+        <Button x:Name="m_Btn_SaveCfg" Content="Save Config" Margin="650,634,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.828,-0.201" Width="150" Click="OnClick_Btn_SaveCfg"/>
+        <Button x:Name="m_Btn_RstDev" Content="Restart Device" Margin="650,684,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.828,-0.201" Width="150" Click="OnClick_Btn_RstDev"/>
+
+    </Grid>
+</Page>
