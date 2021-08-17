@@ -1,0 +1,187 @@
+*****************************************************************************
+
+    CONVENTION:
+
+    In a GUID of a Characteristic the 1st group specifies the Characteristic purpose,
+    while the 2nd group is always '0000'. A Descriptor uses in its 1st group the same
+    value as it's assoziated Characteristic, but with a value unequal '0000' in the
+    2nd group. For the first Descriptor the value '0001' is used. This scheme allows
+    multiple Descriptors for one Characteristic in the future by continue numbering
+    with '0002' etc. However, this implementation always uses only the first descriptor
+    ('001').
+
+    Sample:
+    GUID Characteristic:         "00003100-0000-1000-8000-E776CC14FE69"
+    GUID Offset Descriptor:      "00000000-0001-0000-0000-000000000000"
+                                 --------------------------------------
+    Resulting Descriptor GUID:   "00003100-0001-1000-8000-E776CC14FE69"
+
+  -------------------------------------------------------------------------
+
+  Revision History:
+
+  2021/02/25 -rs:   V1.00 Initial version
+
+****************************************************************************/
+
+
+
+        PROFILE
+            |
+            +-- SERVICE [Device Management]                         BLE_UUID_DEVMNT_SERVICE = "00001000-0000-1000-8000-E776CC14FE69"
+            |       |                                                |
+            |       +-- CHARACTERISTIC [Device Type]                 +--BLE_UUID_DEVMNT_DEVTYPE_CHARACTRSTC = "00001100-0000-1000-8000-E776CC14FE69"
+            |       |       |                                        |   |
+            |       |       +-- Descriptor                           |   +--BLE_UUID_DEVMNT_DEVTYPE_DSCRPT = "00001100-0001-1000-8000-E776CC14FE69"
+            |       |       |                                        |
+            |       |       +-- Properties                           |
+            |       |       |                                        |
+            |       |       +-- Value                                |
+            |       |                                                |
+            |       +-- CHARACTERISTIC [System Tick Count]           +--BLE_UUID_DEVMNT_SYSTICKCNT_CHARACTRSTC = "00001200-0000-1000-8000-E776CC14FE69"
+            |       |       |                                        |   |
+            |       |       +-- Descriptor                           |   +--BLE_UUID_DEVMNT_SYSTICKCNT_DSCRPT = "00001200-0001-1000-8000-E776CC14FE69"
+            |       |       |                                        |
+            |       |       +-- Properties                           |
+            |       |       |                                        |
+            |       |       +-- Value                                |
+            |       |                                                |
+            |       +-- CHARACTERISTIC [Device Name]                 +--BLE_UUID_DEVMNT_DEVNAME_CHARACTRSTC = "00001300-0000-1000-8000-E776CC14FE69"
+            |       |       |                                        |   |
+            |       |       +-- Descriptor                           |   +--BLE_UUID_DEVMNT_DEVNAME_DSCRPT = "00001300-0001-1000-8000-E776CC14FE69"
+            |       |       |                                        |
+            |       |       +-- Properties                           |
+            |       |       |                                        |
+            |       |       +-- Value                                |
+            |       |                                                |
+            |       +-- CHARACTERISTIC [Save Config]                 +--BLE_UUID_DEVMNT_SAVE_CFG_CHARACTRSTC = "00001400-0000-1000-8000-E776CC14FE69"
+            |       |       |                                        |   |
+            |       |       +-- Descriptor                           |   +--BLE_UUID_DEVMNT_SAVE_CFG_DSCRPT = "00001400-0001-1000-8000-E776CC14FE69"
+            |       |       |                                        |
+            |       |       +-- Properties                           |
+            |       |       |                                        |
+            |       |       +-- Value                                |
+            |       |                                                |
+            |       +-- CHARACTERISTIC [Restart Device]              +--BLE_UUID_DEVMNT_RST_DEV_CHARACTRSTC = "00001500-0000-1000-8000-E776CC14FE69"
+            |               |                                            |
+            |               +-- Descriptor                               +--BLE_UUID_DEVMNT_RST_DEV_DSCRPT = "00001500-0001-1000-8000-E776CC14FE69"
+            |               |
+            |               +-- Properties
+            |               |
+            |               +-- Value
+            |
+            |
+            |
+            +-- SERVICE [WIFI Config]                               BLE_UUID_WIFI_CFG_SERVICE = "00002000-0000-1000-8000-E776CC14FE69"
+            |       |                                                |
+            |       +-- CHARACTERISTIC [SSID]                        +--BLE_UUID_WIFI_SSID_CHARACTRSTC = "00002100-0000-1000-8000-E776CC14FE69"
+            |       |       |                                        |   |
+            |       |       +-- Descriptor                           |   +--BLE_UUID_WIFI_SSID_DSCRPT = "00002100-0001-1000-8000-E776CC14FE69"
+            |       |       |                                        |
+            |       |       +-- Properties                           |
+            |       |       |                                        |
+            |       |       +-- Value                                |
+            |       |                                                |
+            |       +-- CHARACTERISTIC [Password]                    +--BLE_UUID_WIFI_PASSWD_CHARACTRSTC = "00002200-0000-1000-8000-E776CC14FE69"
+            |       |       |                                        |   |
+            |       |       +-- Descriptor                           |   +--BLE_UUID_WIFI_PASSWD_DSCRPT = "00002200-0001-1000-8000-E776CC14FE69"
+            |       |       |                                        |
+            |       |       +-- Properties                           |
+            |       |       |                                        |
+            |       |       +-- Value                                |
+            |       |                                                |
+            |       +-- CHARACTERISTIC [Own Address]                 +--BLE_UUID_WIFI_OWNADDR_CHARACTRSTC = "00002300-0000-1000-8000-E776CC14FE69"
+            |       |       |                                        |   |
+            |       |       +-- Descriptor                           |   +--BLE_UUID_WIFI_OWNADDR_DSCRPT = "00002300-0001-1000-8000-E776CC14FE69"
+            |       |       |                                        |
+            |       |       +-- Properties                           |
+            |       |       |                                        |
+            |       |       +-- Value                                |
+            |       |                                                |
+            |       +-- CHARACTERISTIC [Own Mode]                    +--BLE_UUID_WIFI_OWNMODE_CHARACTRSTC = "00002400-0000-1000-8000-E776CC14FE69"
+            |               |                                            |
+            |               +-- Descriptor                               +--BLE_UUID_WIFI_OWNMODE_DSCRPT = "00002400-0001-1000-8000-E776CC14FE69"
+            |               |                                            |
+            |               +-- Descriptor_FeatureList                   +--BLE_UUID_WIFI_OWNMODE_DSCRPT_FEATLIST = "00002400-0002-1000-8000-E776CC14FE69"
+            |               |
+            |               +-- Properties
+            |               |
+            |               +-- Value
+            |
+            |
+            |
+            +-- SERVICE [App Runtime Options]                       BLE_UUID_APP_RT_SERVICE = "00003000-0000-1000-8000-E776CC14FE69"
+                    |                                                |
+                    +-- CHARACTERISTIC [Runtime Option #1]           +--BLE_UUID_APP_RT_OPT1_CHARACTRSTC = "00003100-0000-1000-8000-E776CC14FE69"
+                    |       |                                        |   |
+                    |       +-- Descriptor                           |   +--BLE_UUID_APP_RT_OPT1_DSCRPT = "00003100-0001-1000-8000-E776CC14FE69"
+                    |       |                                        |
+                    |       +-- Properties                           |
+                    |       |                                        |
+                    |       +-- Value                                |
+                    |                                                |
+                    +-- CHARACTERISTIC [Runtime Option #2]           +--BLE_UUID_APP_RT_OPT2_CHARACTRSTC = "00003200-0000-1000-8000-E776CC14FE69"
+                    |       |                                        |   |
+                    |       +-- Descriptor                           |   +--BLE_UUID_APP_RT_OPT2_DSCRPT = "00003200-0001-1000-8000-E776CC14FE69"
+                    |       |                                        |
+                    |       +-- Properties                           |
+                    |       |                                        |
+                    |       +-- Value                                |
+                    |                                                |
+                    +-- CHARACTERISTIC [Runtime Option #3]           +--BLE_UUID_APP_RT_OPT3_CHARACTRSTC = "00003300-0000-1000-8000-E776CC14FE69"
+                    |       |                                        |   |
+                    |       +-- Properties                           |   +--BLE_UUID_APP_RT_OPT3_DSCRPT = "00003300-0001-1000-8000-E776CC14FE69"
+                    |       |                                        |
+                    |       +-- Value                                |
+                    |       |                                        |
+                    |       +-- Descriptor                           |
+                    |                                                |
+                    +-- CHARACTERISTIC [Runtime Option #4]           +--BLE_UUID_APP_RT_OPT4_CHARACTRSTC = "00003400-0000-1000-8000-E776CC14FE69"
+                    |       |                                        |   |
+                    |       +-- Descriptor                           |   +--BLE_UUID_APP_RT_OPT4_DSCRPT = "00003400-0001-1000-8000-E776CC14FE69"
+                    |       |                                        |
+                    |       +-- Properties                           |
+                    |       |                                        |
+                    |       +-- Value                                |
+                    |                                                |
+                    +-- CHARACTERISTIC [Runtime Option #5]           +--BLE_UUID_APP_RT_OPT1_CHARACTRSTC = "00003500-0000-1000-8000-E776CC14FE69"
+                    |       |                                        |   |
+                    |       +-- Descriptor                           |   +--BLE_UUID_APP_RT_OPT1_DSCRPT = "00003500-0001-1000-8000-E776CC14FE69"
+                    |       |                                        |
+                    |       +-- Properties                           |
+                    |       |                                        |
+                    |       +-- Value                                |
+                    |                                                |
+                    +-- CHARACTERISTIC [Runtime Option #6]           +--BLE_UUID_APP_RT_OPT2_CHARACTRSTC = "00003600-0000-1000-8000-E776CC14FE69"
+                    |       |                                        |   |
+                    |       +-- Descriptor                           |   +--BLE_UUID_APP_RT_OPT2_DSCRPT = "00003600-0001-1000-8000-E776CC14FE69"
+                    |       |                                        |
+                    |       +-- Properties                           |
+                    |       |                                        |
+                    |       +-- Value                                |
+                    |                                                |
+                    +-- CHARACTERISTIC [Runtime Option #7]           +--BLE_UUID_APP_RT_OPT3_CHARACTRSTC = "00003700-0000-1000-8000-E776CC14FE69"
+                    |       |                                        |   |
+                    |       +-- Properties                           |   +--BLE_UUID_APP_RT_OPT3_DSCRPT = "00003700-0001-1000-8000-E776CC14FE69"
+                    |       |                                        |
+                    |       +-- Value                                |
+                    |       |                                        |
+                    |       +-- Descriptor                           |
+                    |                                                |
+                    +-- CHARACTERISTIC [Runtime Option #8]           +--BLE_UUID_APP_RT_OPT4_CHARACTRSTC = "00003800-0000-1000-8000-E776CC14FE69"
+                    |       |                                        |   |
+                    |       +-- Descriptor                           |   +--BLE_UUID_APP_RT_OPT4_DSCRPT = "00003800-0001-1000-8000-E776CC14FE69"
+                    |       |                                        |
+                    |       +-- Properties                           |
+                    |       |                                        |
+                    |       +-- Value                                |
+                    |                                                |
+                    +-- CHARACTERISTIC [Peer Address]                +--BLE_UUID_APP_RT_PEERADDR_CHARACTRSTC = "00003900-0000-1000-8000-E776CC14FE69"
+                            |                                            |
+                            +-- Descriptor                               +--BLE_UUID_APP_RT_PEERADDR_DSCRPT = "00003900-0001-1000-8000-E776CC14FE69"
+                            |
+                            +-- Properties
+                            |
+                            +-- Value
+
+
