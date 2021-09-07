@@ -127,6 +127,8 @@ Use the sketch template *ESP32BleConfig.ino* as a starting point for own applica
 
 To enable the configuration via Bluetooth, an explicit activation is required. The flag `fStateBleCfg_g` is used for this in the *ESP32BleConfig.ino* sketch template. In a real sketch, the flag can be set e.g. by querying a button when the system is started. On the *ESP32SmartBoard* (see hardware project [ESP32SmartBoard_PCB](https://github.com/ronaldsieber/ESP32SmartBoard_PCB)), the button _BLE_CFG_ is provided for this:
 
+    const int  PIN_KEY_BLE_CFG = 36;                 // GPIO36 -> Pin02
+
     pinMode(PIN_KEY_BLE_CFG, INPUT);
     fStateBleCfg_g = !digitalRead(PIN_KEY_BLE_CFG);  // Keys are inverted (1=off, 0=on)
     if ( fStateBleCfg_g )
@@ -159,6 +161,17 @@ A recommended knowledge base for using the BLE subsystem in .NET/UWP application
 [https://docs.microsoft.com/en-us/samples/microsoft/windows-universal-samples/bluetoothle/](https://docs.microsoft.com/en-us/samples/microsoft/windows-universal-samples/bluetoothle/)
 
 The PC used for the Configuration Tool must have a suitable Bluetooth interface. Such an interface is typically integrated in laptops. A USB Bluetooth adapter dongle (e.g., TP-Link UB400 Nano) is suitable for desktop PCs.
+
+The implementation of the Graphical Configuration Tool is essentially divided into the following source code files:
+
+ - [Esp32ConfigUwp\MainPage.xaml.cs](Esp32ConfigUwp\MainPage.xaml.cs):
+Functionalities of the graphical user interface as well as their connection to the backend
+
+ - [Esp32ConfigUwp\BleDeviceManagement.cs](Esp32ConfigUwp\BleDeviceManagement.cs):
+BLE device management functionalities such as scanning of available devices, connect and disconnect
+
+ - [Esp32ConfigUwp\Esp32BleGattServices.cs](Esp32ConfigUwp\Esp32BleGattServices.cs):
+Implementation of the specific Bluetooth device profile (`class Esp32BleAppCfgProfile`) with the 3 services *"Device Management"* (`class BleGattServiceDevMnt`), *"WIFI Config"* (`class BleGattServiceWifi`) and *"App Runtime Options"* (`class BleGattServiceAppRt`)
 
 **Deployment for UWP Applications**
 
@@ -209,6 +222,12 @@ If an identifier in the ESP32/Arduino sketch starts with a *'#'* character, then
     #define  APP_LABEL_APP_RT_OPTx  "# (not used)"  // Start with '#' -> disable in GUI
 
 ![\[Customizing_GUI_Label\]](Documentation/Customizing_GUI_Label.png)
+
+
+## Used Third Party Components
+
+No third-party components are used. Both BLE and EEPROM support are installed along with the Arduino ESP32 add-on.
+
 
 ## Practice Notes
 
