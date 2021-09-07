@@ -102,7 +102,7 @@ const int       PIN_STATUS_LED                      =  2;               // On-bo
 
 
 //---------------------------------------------------------------------------
-//  Local variables
+//  Local Variables
 //---------------------------------------------------------------------------
 
 static tAppCfgData  AppCfgData_g =
@@ -168,7 +168,7 @@ static  unsigned int    uiMainLoopProcStep_g        = 0;
 
 
 //---------------------------------------------------------------------------
-//  Local functions
+//  Local Functions
 //---------------------------------------------------------------------------
 
 
@@ -194,7 +194,7 @@ static  unsigned int    uiMainLoopProcStep_g        = 0;
 void setup()
 {
 
-char  szVersion[64];
+char  szTextBuff[64];
 int   iResult;
 
 
@@ -206,18 +206,19 @@ int   iResult;
     Serial.println();
     Serial.flush();
 
+
     // Application Version Information
-    snprintf(szVersion, sizeof(szVersion), "App Version:     %u.%02u", APP_VERSION, APP_REVISION);
-    Serial.println(szVersion);
-    snprintf(szVersion, sizeof(szVersion), "Build Timestamp: %s", APP_BUILD_TIMESTAMP);
-    Serial.println(szVersion);
+    snprintf(szTextBuff, sizeof(szTextBuff), "App Version:      %u.%02u", APP_VERSION, APP_REVISION);
+    Serial.println(szTextBuff);
+    snprintf(szTextBuff, sizeof(szTextBuff), "Build Timestamp:  %s", APP_BUILD_TIMESTAMP);
+    Serial.println(szTextBuff);
     Serial.println();
     Serial.flush();
 
 
     // Device Identification
     strChipID_g = GetChipID();
-    Serial.print("Unique ChipID: ");
+    Serial.print("Unique ChipID:    ");
     Serial.println(strChipID_g);
     Serial.println();
     Serial.flush();
@@ -782,7 +783,7 @@ int                   nCol;
             break;
         }
 
-        delay(50);          // give serial interface time to flush data
+        Serial.flush();     // give serial interface time to flush data
     }
 
     Serial.print("\n");
