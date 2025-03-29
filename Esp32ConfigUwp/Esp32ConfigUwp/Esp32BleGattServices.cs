@@ -3105,10 +3105,11 @@ namespace Esp32ConfigUwp
 
             IBuffer  Buffer;
 
-            if (strData_p == null)
+            if ((strData_p == null) || (strData_p == ""))
             {
                 strData_p = new string('\0', 1);
             }
+            strData_p = strData_p.Trim();
             Buffer = CryptographicBuffer.ConvertStringToBinary(strData_p, BinaryStringEncoding.Utf8);
 
             return (Buffer);
